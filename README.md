@@ -1,24 +1,15 @@
-# EngineCredo
+# engine-credo
 
-**TODO: Add description**
+`engine-credo` is a Docker container that wraps
+[credo](http://github.com/rrene/credo) as a standalone executable,
+following the [Code Climate Engine spec](https://github.com/codeclimate/spec)
+for JSON output.
 
-## Installation
+## Configuration
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
+**TODO**
 
-  1. Add `engine_credo` to your list of dependencies in `mix.exs`:
+## Need help?
 
-    ```elixir
-    def deps do
-      [{:engine_credo, "~> 0.1.0"}]
-    end
-    ```
-
-  2. Ensure `engine_credo` is started before your application:
-
-    ```elixir
-    def application do
-      [applications: [:engine_credo]]
-    end
-    ```
-
+For help with `credo`,
+[check out their documentation](https://github.com/rrene/credo).
