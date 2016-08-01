@@ -8,8 +8,10 @@ defmodule EngineCredo.CLI do
 
   alias EngineCredo.{Config,Runner,Formatter}
 
+  def main([]), do: main(["/code"])
   def main(argv) do
     argv
+    |> List.first
     |> Config.read
     |> Runner.check
     |> Formatter.print
