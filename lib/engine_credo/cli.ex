@@ -1,13 +1,17 @@
 defmodule EngineCredo.CLI do
-  def main(args) do
-    args |> say_hello
-  end
+  @moduledoc """
+  EngineCredo.CLI is the entrypoint for the code analysis escript.
 
-  def say_hello([name|_]) do
-    IO.puts "Hello, #{name}!"
-  end
+  A single command line parameter is expected, defining the root directory
+  where the source files are located.
+  """
 
-  def say_hello(_) do
-    IO.puts "Hello!"
+  alias EngineCredo.{Config,Runner,Formatter}
+
+  def main(argv) do
+    argv
+    |> Config.read
+    |> Runner.check
+    |> Formatter.print
   end
 end
