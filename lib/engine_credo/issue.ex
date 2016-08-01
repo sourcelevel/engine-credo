@@ -22,12 +22,23 @@ defmodule EngineCredo.Issue do
       check_name: issue.check,
       description: issue.message,
       categories: [issue.category],
-      location: %{
-        path: issue.filename,
-        positions: %{
-          begin: %{line: issue.line_no, column: issue.column},
-            end: %{line: issue.line_no, column: issue.column}
-        }
+      location: locations(issue)
+    }
+  end
+
+  defp locations(%Credo.Issue{column: nil, line_no: line, filename: path}) do
+    %{
+      path: path,
+      lines: %{begin: line, end: line}
+    }
+  end
+
+  defp locations(%Credo.Issue{column: column, line_no: line, filename: path}) do
+    %{
+      path: path,
+      positions: %{
+        begin: %{line: line, column: column},
+          end: %{line: line, column: column}
       }
     }
   end
