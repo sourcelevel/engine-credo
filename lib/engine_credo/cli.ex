@@ -6,9 +6,11 @@ defmodule EngineCredo.CLI do
   where the source files are located.
   """
 
+  @source_code_path Application.get_env(:engine_credo, :source_code_path)
+
   alias EngineCredo.{Config,Runner,Formatter}
 
-  def main([]), do: main(["/code"])
+  def main([]), do: main([@source_code_path])
   def main(argv) do
     argv
     |> List.first
