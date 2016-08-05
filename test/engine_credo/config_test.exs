@@ -4,7 +4,7 @@ defmodule EngineCredo.ConfigTest do
   alias EngineCredo.Config
 
   test "configures the credo engine for a given path" do
-    %{credo_config: config} = Config.read(%Config{source_code_path: "test/fixtures/project_root"})
+    %{credo_config: config} = Config.read
 
     expected_included_paths = [
       "test/fixtures/project_root/lib/**/*.{ex,exs}",
@@ -26,10 +26,7 @@ defmodule EngineCredo.ConfigTest do
       ]
     }
 
-    %{credo_config: config} = Config.read(%Config{
-      source_code_path: "test/fixtures/project_root",
-      engine_config: engine_config
-    })
+    %{credo_config: config} = Config.read(%Config{engine_config: engine_config})
 
     expected_included_paths = [
       "test/fixtures/project_root/lib/**/*.{ex,exs}",
@@ -44,7 +41,7 @@ defmodule EngineCredo.ConfigTest do
   end
 
   test "finds elixir files to check" do
-    %{source_files: files} = Config.read(%Config{source_code_path: "test/fixtures/project_root"})
+    %{source_files: files} = Config.read
 
     [%Credo.SourceFile{filename: file}] = files
     assert "test/fixtures/project_root/lib/design_issues.exs" == file

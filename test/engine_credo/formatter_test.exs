@@ -7,8 +7,7 @@ defmodule EngineCredo.FormatterTest do
 
   test "prints issues as JSON separated by \0 and \n" do
     output = capture_io(fn ->
-      %Config{source_code_path: "test/fixtures/project_root"}
-      |> Config.read
+      Config.read
       |> Runner.check
       |> Formatter.print
     end)

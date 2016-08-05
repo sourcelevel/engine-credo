@@ -5,8 +5,7 @@ defmodule EngineCredo.RunnerTest do
 
   test "finds credo issues for the given source files" do
     checked_files =
-      %Config{source_code_path: "test/fixtures/project_root"}
-      |> Config.read
+      Config.read
       |> Runner.check
       |> Enum.to_list
 

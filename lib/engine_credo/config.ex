@@ -7,16 +7,28 @@ defmodule EngineCredo.Config do
   is a JSON file (`/config.json`) residing at the container root by default.
   """
 
+  @source_code_path Application.get_env(:engine_credo, :source_code_path)
   @engine_config_file Application.get_env(:engine_credo, :engine_config_file)
 
   defstruct source_code_path: nil,
-            credo_config: nil,
             engine_config: nil,
+            credo_config: nil,
             source_files: []
+
+  def read, do: read(%__MODULE__{})
+
+  def read(source_code_path) when is_binary(source_code_path) do
+    read(%__MODULE__{source_code_path: source_code_path})
+  end
+
+  def read(%__MODULE__{source_code_path: nil} = config) do
+    read(%{config | source_code_path: @source_code_path})
+  end
 
   def read(%__MODULE__{engine_config: nil} = config) do
     read(%{config | engine_config: read_engine_config(@engine_config_file)})
   end
+
   def read(%__MODULE__{source_code_path: path, engine_config: engine_config} = config) do
     credo_config =
       path
@@ -28,10 +40,9 @@ defmodule EngineCredo.Config do
     %{config | credo_config: credo_config, source_files: source_files}
   end
 
-  defp valid_source_files(config) do
-    config
-    |> Credo.Sources.find
-    |> Enum.filter(&(&1.valid?))
+  def read(source_code_path, engine_config_file) do
+    engine_config = read_engine_config(engine_config_file)
+    read(%__MODULE__{source_code_path: source_code_path, engine_config: engine_config})
   end
 
   defp read_engine_config(config_file) do
@@ -51,5 +62,11 @@ defmodule EngineCredo.Config do
       |> Enum.concat(files_from_engine_config)
       |> Enum.uniq
     end
+  end
+
+  defp valid_source_files(config) do
+    config
+    |> Credo.Sources.find
+    |> Enum.filter(&(&1.valid?))
   end
 end
