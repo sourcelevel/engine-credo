@@ -1,13 +1,16 @@
 defmodule EngineCredo.FormatterTest do
   use ExUnit.Case
 
+  alias EngineCredo.{Config,Formatter,Runner}
+
   import ExUnit.CaptureIO
 
   test "prints issues as JSON separated by \0 and \n" do
     output = capture_io(fn ->
-      EngineCredo.Config.read("test/fixtures/project_root")
-      |> EngineCredo.Runner.check
-      |> EngineCredo.Formatter.print
+      %Config{source_code_path: "test/fixtures/project_root"}
+      |> Config.read
+      |> Runner.check
+      |> Formatter.print
     end)
 
     first_issue = ~S({"type":"issue","location":{"path":"test/fixtures/project_root/lib/design_issues.exs","lines":{"end":4,"begin":4}},"description":"Found a TODO tag in a comment: # TODO: issue","check_name":"Elixir.Credo.Check.Design.TagTODO","categories":["design"]})

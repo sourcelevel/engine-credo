@@ -9,17 +9,23 @@ defmodule EngineCredo.Config do
 
   @engine_config_file Application.get_env(:engine_credo, :engine_config_file)
 
-  def read(source_path, engine_config_file \\ @engine_config_file) do
-    engine_config = read_engine_config(engine_config_file)
+  defstruct source_code_path: nil,
+            credo_config: nil,
+            engine_config: nil,
+            source_files: []
 
+  def read(%__MODULE__{engine_config: nil} = config) do
+    read(%{config | engine_config: read_engine_config(@engine_config_file)})
+  end
+  def read(%__MODULE__{source_code_path: path, engine_config: engine_config} = config) do
     credo_config =
-      source_path
+      path
       |> Credo.Config.read_or_default
-      |> include_files_from(engine_config, source_path)
+      |> include_files_from(engine_config, path)
 
     source_files = valid_source_files(credo_config)
 
-    {credo_config, source_files}
+    %{config | credo_config: credo_config, source_files: source_files}
   end
 
   defp valid_source_files(config) do

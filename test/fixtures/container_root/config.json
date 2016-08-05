@@ -1,7 +1,0 @@
-{
-  "include_paths":[
-    "src/",
-    "extra/",
-    "other/no_issues.exs"
-  ]
-}

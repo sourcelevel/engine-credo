@@ -12,9 +12,11 @@ defmodule EngineCredo.CLI do
 
   def main([]), do: main([@source_code_path])
   def main(argv) do
-    argv
-    |> List.first
-    |> Config.read
+    config =
+      %Config{source_code_path: List.first(argv)}
+      |> Config.read
+
+    config
     |> Runner.check
     |> Formatter.print
   end

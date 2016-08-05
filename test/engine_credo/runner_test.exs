@@ -1,10 +1,14 @@
 defmodule EngineCredo.RunnerTest do
   use ExUnit.Case
 
+  alias EngineCredo.{Config,Runner}
+
   test "finds credo issues for the given source files" do
-    checked_files = EngineCredo.Config.read("test/fixtures/project_root")
-                    |> EngineCredo.Runner.check
-                    |> Enum.to_list
+    checked_files =
+      %Config{source_code_path: "test/fixtures/project_root"}
+      |> Config.read
+      |> Runner.check
+      |> Enum.to_list
 
     issues = checked_files |> Enum.map(&(&1.check_name))
 

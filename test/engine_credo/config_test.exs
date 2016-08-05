@@ -1,8 +1,10 @@
 defmodule EngineCredo.ConfigTest do
   use ExUnit.Case
 
+  alias EngineCredo.Config
+
   test "configures the credo engine for a given path" do
-    {config, _} = EngineCredo.Config.read("test/fixtures/project_root")
+    %{credo_config: config} = Config.read(%Config{source_code_path: "test/fixtures/project_root"})
 
     expected_included_paths = [
       "test/fixtures/project_root/lib/**/*.{ex,exs}",
@@ -16,10 +18,18 @@ defmodule EngineCredo.ConfigTest do
   end
 
   test "merges paths from the engine config" do
-    {config, _} = EngineCredo.Config.read(
-      "test/fixtures/project_root",
-      "test/fixtures/container_root/config.json"
-    )
+    engine_config = %{
+      "include_paths" => [
+        "src/",
+        "extra/",
+        "other/no_issues.exs"
+      ]
+    }
+
+    %{credo_config: config} = Config.read(%Config{
+      source_code_path: "test/fixtures/project_root",
+      engine_config: engine_config
+    })
 
     expected_included_paths = [
       "test/fixtures/project_root/lib/**/*.{ex,exs}",
@@ -34,9 +44,9 @@ defmodule EngineCredo.ConfigTest do
   end
 
   test "finds elixir files to check" do
-    {_, source_files} = EngineCredo.Config.read("test/fixtures/project_root")
+    %{source_files: files} = Config.read(%Config{source_code_path: "test/fixtures/project_root"})
 
-    [%Credo.SourceFile{filename: file}] = source_files
+    [%Credo.SourceFile{filename: file}] = files
     assert "test/fixtures/project_root/lib/design_issues.exs" == file
   end
 end
