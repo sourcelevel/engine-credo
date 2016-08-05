@@ -1,42 +1,38 @@
 defmodule EngineCredo.IssueTest do
   use ExUnit.Case
 
+  alias EngineCredo.Issue
+
   test "handles columnless (line only) issues" do
     original_issue = %Credo.Issue{column: nil, line_no: 42, filename: "here.ex"}
-    expected_issue = %EngineCredo.Issue{
-      type: "issue",
-      check_name: nil,
-      description: nil,
-      categories: [nil],
-      location: %{
-        path: "here.ex",
-        lines: %{begin: 42, end: 42}
-      }
+
+    %Issue{location: converted_location} = Issue.convert(original_issue)
+
+    assert converted_location == %{
+      path: "here.ex",
+      lines: %{begin: 42, end: 42}
     }
-
-    converted_issue = EngineCredo.Issue.convert(original_issue)
-
-    assert expected_issue == converted_issue
   end
 
   test "handles issues with column information" do
     original_issue = %Credo.Issue{column: 10, line_no: 42, filename: "here.ex"}
-    expected_issue = %EngineCredo.Issue{
-      type: "issue",
-      check_name: nil,
-      description: nil,
-      categories: [nil],
-      location: %{
-        path: "here.ex",
-        positions: %{
-          begin: %{line: 42, column: 10},
-            end: %{line: 42, column: 10}
-        }
+
+    %Issue{location: converted_location} = Issue.convert(original_issue)
+
+    assert converted_location == %{
+      path: "here.ex",
+      positions: %{
+        begin: %{line: 42, column: 10},
+          end: %{line: 42, column: 10}
       }
     }
+  end
 
-    converted_issue = EngineCredo.Issue.convert(original_issue)
+  test "emits paths relative to the given prefix" do
+    original_issue = %Credo.Issue{line_no: 42, filename: "/the/project/lib/module/here.ex"}
 
-    assert expected_issue == converted_issue
+    %Issue{location: %{path: converted_path}} = Issue.convert(original_issue, "/the/project")
+
+    assert converted_path == "lib/module/here.ex"
   end
 end

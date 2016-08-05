@@ -8,6 +8,7 @@ defmodule EngineCredo.Issue do
   Waring: this is a work in progress. Issue categories and extra metadata are
   yet TBD.
   """
+
   @derive [Poison.Encoder]
 
   defstruct type: nil,
@@ -16,7 +17,15 @@ defmodule EngineCredo.Issue do
             categories: [],
             location: %{}
 
-  def convert(issue) do
+  @doc """
+  Converts a `Credo.Issue` into an `EngineCredo.Issue`.
+
+  An optional `path_prefix` can be provided, so that all the paths converted
+  are relative to the given prefix.
+  """
+  def convert(issue, path_prefix \\ "") do
+    issue = update_in(issue.filename, &Path.relative_to(&1, path_prefix))
+
     %EngineCredo.Issue{
       type: "issue",
       check_name: issue.check,
