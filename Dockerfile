@@ -9,4 +9,4 @@ USER app
 VOLUME /code
 WORKDIR /code
 
-CMD ["/usr/src/app/engine-credo /code"]
+CMD ["/usr/src/app/engine-credo"]
