@@ -32,7 +32,7 @@ defmodule EngineCredo.Config do
   def read(%__MODULE__{source_code_path: path, engine_config: engine_config} = config) do
     credo_config =
       path
-      |> Credo.Config.read_or_default
+      |> Credo.Config.read_or_default(nil, true) # true required for safe loading of `.credo.exs`
       |> include_files_from(engine_config, path)
 
     source_files = valid_source_files(credo_config)
