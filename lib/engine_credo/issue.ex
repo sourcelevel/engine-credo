@@ -4,9 +4,6 @@ defmodule EngineCredo.Issue do
 
   This struct defines how a Credo issue gets translated into a Code Climate
   issue. Most of the mapping is pretty straightforward.
-
-  Waring: this is a work in progress. Issue categories and extra metadata are
-  yet TBD.
   """
 
   @derive [Poison.Encoder]
@@ -30,7 +27,7 @@ defmodule EngineCredo.Issue do
       type: "issue",
       check_name: issue.check,
       description: issue.message,
-      categories: [issue.category],
+      categories: EngineCredo.IssueCategories.for_check(issue.check),
       location: locations(issue)
     }
   end
