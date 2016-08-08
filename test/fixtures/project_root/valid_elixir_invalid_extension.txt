@@ -1,0 +1,2 @@
+defmodule ValidElixirInvalidExtension do
+end

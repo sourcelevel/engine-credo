@@ -3,7 +3,7 @@
 IMAGE_NAME ?= plataformatec/engine-credo
 
 compile:
-	mix escript.build
+	MIX_ENV=prod mix escript.build
 
 image: compile
 	docker build --rm -t $(IMAGE_NAME) .
