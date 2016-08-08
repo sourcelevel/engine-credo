@@ -48,7 +48,7 @@ defmodule EngineCredo.IssueCategories do
     Credo.Check.Warning.NameRedeclarationByCase => ["Bug Risk"],
     Credo.Check.Warning.NameRedeclarationByDef => ["Bug Risk"],
     Credo.Check.Warning.NameRedeclarationByFn => ["Bug Risk"],
-    Credo.Check.Warning.OperationOnSameValues => ["Bug Rusk"],
+    Credo.Check.Warning.OperationOnSameValues => ["Bug Risk"],
     Credo.Check.Warning.OperationWithConstantResult => ["Clarity"],
     Credo.Check.Warning.UnusedEnumOperation => ["Bug Risk"],
     Credo.Check.Warning.UnusedKeywordOperation => ["Bug Risk"],
