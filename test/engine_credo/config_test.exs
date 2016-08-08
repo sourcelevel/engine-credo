@@ -46,4 +46,18 @@ defmodule EngineCredo.ConfigTest do
     [%Credo.SourceFile{filename: file}] = files
     assert "test/fixtures/project_root/lib/design_issues.exs" == file
   end
+
+  test "filters out valid files with unknown extensions" do
+    engine_config = %{
+      "include_paths" => ["valid_elixir_invalid_extension.txt"]
+    }
+
+    %{source_files: files} = Config.read(%Config{engine_config: engine_config})
+
+    contains_invalid_file = Enum.any?(files,
+      &(&1.filename == "test/fixtures/project_root/valid_elixir_invalid_extension.txt")
+    )
+
+    refute contains_invalid_file
+  end
 end

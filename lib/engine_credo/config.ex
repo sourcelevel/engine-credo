@@ -64,9 +64,12 @@ defmodule EngineCredo.Config do
     end
   end
 
+  # Filter out malformed Elixir files and also valid Elixir files with an unknown
+  # file extension (`.ex` or `.exs`).
   defp valid_source_files(config) do
     config
     |> Credo.Sources.find
     |> Enum.filter(&(&1.valid?))
+    |> Enum.filter(&String.ends_with?(&1.filename, [".ex", ".exs"]))
   end
 end
