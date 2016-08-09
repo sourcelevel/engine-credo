@@ -38,6 +38,7 @@ defmodule EngineCredo.IssueCategories do
     Credo.Check.Refactor.NegatedConditionsInUnless => ["Style"],
     Credo.Check.Refactor.NegatedConditionsWithElse => ["Style"],
     Credo.Check.Refactor.Nesting => ["Complexity"],
+    Credo.Check.Refactor.PerceivedComplexity => ["Complexity"],
     Credo.Check.Refactor.PipeChainStart => ["Clarity"],
     Credo.Check.Refactor.UnlessWithElse => ["Style"],
 
@@ -51,10 +52,16 @@ defmodule EngineCredo.IssueCategories do
     Credo.Check.Warning.OperationOnSameValues => ["Bug Risk"],
     Credo.Check.Warning.OperationWithConstantResult => ["Clarity"],
     Credo.Check.Warning.UnusedEnumOperation => ["Bug Risk"],
+    Credo.Check.Warning.UnusedFileOperation => ["Bug Risk"],
     Credo.Check.Warning.UnusedKeywordOperation => ["Bug Risk"],
     Credo.Check.Warning.UnusedListOperation => ["Bug Risk"],
+    Credo.Check.Warning.UnusedPathOperation => ["Bug Risk"],
+    Credo.Check.Warning.UnusedRegexOperation => ["Bug Risk"],
     Credo.Check.Warning.UnusedStringOperation => ["Bug Risk"],
-    Credo.Check.Warning.UnusedTupleOperation => ["Bug Risk"]
+    Credo.Check.Warning.UnusedTupleOperation => ["Bug Risk"],
+
+    # Deprecated checks
+    Credo.Check.Refactor.CaseTrivialMatches => ["Clarity"]
   }
 
   @doc """
