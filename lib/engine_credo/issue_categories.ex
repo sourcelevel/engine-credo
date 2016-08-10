@@ -5,6 +5,7 @@ defmodule EngineCredo.IssueCategories do
   Additional configuration is provided by the Code Climate engine config, which
   is a JSON file (`/config.json`) residing at the container root by default.
   """
+  @after_compile __MODULE__
 
   @lookup_table %{
     Credo.Check.Consistency.ExceptionNames => ["Style"],
@@ -64,6 +65,12 @@ defmodule EngineCredo.IssueCategories do
     Credo.Check.Refactor.CaseTrivialMatches => ["Clarity"]
   }
 
+  @helper_modules [
+    Credo.Check.Design.TagHelper,
+    Credo.Check.FindLintAttributes,
+    Credo.Check.Warning.UnusedFunctionReturnHelper
+  ]
+
   @doc """
   Get a list of Code Climate issue categories based on the given `Credo.Check`.
 
@@ -79,10 +86,24 @@ defmodule EngineCredo.IssueCategories do
   * Style
   """
   def for_check(nil), do: []
-  def for_check(credo_check) do
-    # TODO: currently, if an unknown check is found, the whole analysis will
-    #       fail. A more robust alternative would be registering the miss in
-    #       the error log and carrying on with the partial analysis.
-    Map.fetch!(@lookup_table, credo_check)
+  def for_check(credo_check), do: Map.fetch!(@lookup_table, credo_check)
+
+  def __after_compile__(_env, _bytecode) do
+    Application.load(:credo)
+    modules = Application.spec(:credo, :modules)
+
+    missing_checks =
+    modules
+    |> Enum.filter(&credo_check?/1)
+    |> Kernel.--(@helper_modules)
+    |> Kernel.--(Map.keys(@lookup_table))
+
+    if Enum.any?(missing_checks) do
+      raise "Missing category mapping for #{Enum.join(missing_checks, ", ")}."
+    end
+  end
+
+  defp credo_check?(module) do
+    Code.ensure_loaded?(module) && function_exported?(module, :category, 0)
   end
 end
