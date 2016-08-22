@@ -27,7 +27,7 @@ defmodule EngineCredo.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [
-      {:credo, github: "britto/credo", branch: "fix-duplicated-source-files", override: true},
+      {:credo, github: "rrrene/credo", override: true},
       {:poison, "~> 2.2"}
     ]
   end
