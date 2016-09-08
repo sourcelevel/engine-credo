@@ -1,7 +1,7 @@
 # engine-credo
 
 `engine-credo` is a Docker container that wraps
-[credo](http://github.com/rrene/credo) as a standalone executable,
+[credo](http://github.com/rrrene/credo) as a standalone executable,
 following the [Code Climate Engine spec](https://github.com/codeclimate/spec)
 for JSON output.
 
@@ -12,4 +12,4 @@ for JSON output.
 ## Need help?
 
 For help with `credo`,
-[check out their documentation](https://github.com/rrene/credo).
+[check out their documentation](https://github.com/rrrene/credo).
