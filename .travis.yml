@@ -1,13 +1,17 @@
 language: elixir
 sudo: false
-
+after_success: "./script/push"
+services:
+- docker
 elixir:
-  - 1.3.2
-
+- 1.3.2
 cache:
   directories:
-    - _build
-    - deps
-
+  - _build
+  - deps
 notifications:
   email: false
+env:
+  global:
+  - secure: QoHz3Nq138fhf/t+Yc6Puk3lMB2VshL35hO6Iek941FB97ewhm8i82MdbNMIbxqYzEvmHrq68KB9yJXr29puhJBz8JiftnmFtsx/4+3tsf+l6JWHmzpQGDmeVR/y1O+n4d+o1GlFeoKT96ynm2+2XC4zzsz/nEOhPpq8mq2JKm1LiH/nvWVQn+y/dH1DcUg7La6Q3GzdD6tSRuyw0rsUveS2/lllOTxxdVAZEFfyF9a+8UgVGfj83er3GkH1Smq7YK5wfxGZp+Q+MlVNc6bV6gcjywC3PHrxKVBWnphOQzsybXHq5jOOL7lHG9+Pi+WpkinGcrZUfLUUOUntAmwGUNk0kqSoyqnu8KJ80odWhjezGnRE0I2UPjumjolMxEPXzGX7T1YrcVQQMF3dxD+peI44A71dHB7D5uXnTKFOHwMwPSdpHodK2XctrmPaM+DAZEivvCFzZ5WQts9spWflB/7x9OghfcIZjewCwJ19M4XwVNUL9+h3ru1+QsFnWOor4YzXI/x0D2wfXF3o5rON9TKhp/1P5Hpamc/q6KMpRhxMLzzBedP127pzQg5q+QLhxyccNSzPnYUpv2zbcrroAhLt11Ir1+DASmTbWXMClhZDyPsQbNHa/Y3LUFPWD8kt2JUI7hA3ZJA5hP5unDKC/oetfx/7F96mXme6q4PfIbs=
+  - secure: zXZ5PkxGFg1jfZyKTXWaGUjASyQckdb8+/CvHJ5eGPh1LhX06t/KTaX25dg9Fq2oyljET5NpIaL2u2uaOFQKnV3LE8AZMD8W2rCYDcy+2OwpsMbgc0/pif04CM0RppeENP9xybVCo0t3FT8xG8a0rujEv07HTGEZ28oPVFb9Jq0PmOLkKkZJ5rPa28Qu5c/IWniMmMHfjWMKxAlL5AyAWNi7LDqKRxKEEOobhPu2Fogkc7lib7xXbCGXHo092m5X2AhF1cUxpKOY6LJEgN081PYUdBbIPdmf+BrosXUNlZZVbDECrAc7iwuRGxAaf65UWmPq23r+86aOapirUfxsPoX5kGi1NlmabBGQdi+w3y+u34/qVAtgWLFtMmT++c3OESjfklFnQoe10P2JmDTg4Gh3q/50PQCvl3Z9hpbDtN/eL/Xway75d3kngCwtxJTv2gdjKZFdV1gfxQm7TEPX5mnPUkNmnrH6FJJvcUubJTMQg51VHmLBNI5tIuhApzj6UsqJuHBF26CTjG55oXvctb5FRwIbFbywK+THLxYPia2Z+TA7Mfn3JKjbjrCYMb7gQsMV7Q9by8p1IkQFehpnvKSs600Uq9tLNF+ydUAUiZrUR3ctZoMOKAnuZggQo87LHbs0iLx74PuiVbLy2uPHO3h4mTZKCDj58EUuwxjFveg=
