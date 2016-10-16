@@ -1,0 +1,10 @@
+language: elixir
+sudo: false
+
+cache:
+  directories:
+    - _build
+    - deps
+
+notifications:
+  email: false
