@@ -1,0 +1,7 @@
+#!/bin/bash -ex
+
+mix deps.update credo && \
+  mix test && \
+  make test && \
+  git add mix.lock && \
+  git commit -m "Update 'credo' dependency."
