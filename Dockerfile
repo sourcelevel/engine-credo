@@ -1,12 +1,17 @@
-FROM msaraiva/elixir:1.3.1
+FROM msaraiva/elixir-dev:1.3.1
 MAINTAINER Plataformatec <opensource@plataformatec.com.br>
 
-WORKDIR /usr/src/app
-COPY ./engine-credo /usr/src/app/
+WORKDIR /usr/src/engine
+COPY . /usr/src/engine
+
+ENV MIX_ENV prod
 
 RUN adduser -u 9000 -D app && \
-    apk --update add erlang-crypto && \
-    rm -rf /var/cache/apk/*
+    mix deps.get && \
+    mix escript.build && \
+    mkdir -p /usr/src/app && \
+    mv /usr/src/engine/engine-credo /usr/src/app/engine-credo && \
+    rm -rf /usr/src/engine
 
 USER app
 VOLUME /code
