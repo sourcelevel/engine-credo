@@ -5,7 +5,7 @@ defmodule EngineCredo.FormatterTest do
 
   alias EngineCredo.{Config,Formatter,Runner}
 
-  test "prints issues as JSON separated by \0 and \n" do
+  test "prints issues as JSON separated by \\0 and \\n" do
     output = capture_io(fn ->
       Config.read
       |> Runner.check
