@@ -35,7 +35,7 @@ defmodule EngineCredo.Issue do
   defp locations(%Credo.Issue{column: nil, line_no: line, filename: path}) do
     %{
       path: path,
-      lines: %{begin: line, end: line}
+      lines: %{begin: line || 1, end: line || 1}
     }
   end
 

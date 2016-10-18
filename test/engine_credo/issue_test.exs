@@ -14,6 +14,17 @@ defmodule EngineCredo.IssueTest do
     }
   end
 
+  test "handles issues without line information" do
+    original_issue = %Credo.Issue{column: nil, filename: "file.ex"}
+
+    %Issue{location: converted_location} = Issue.convert(original_issue)
+
+    assert converted_location == %{
+      path: "file.ex",
+      lines: %{begin: 1, end: 1}
+    }
+  end
+
   test "handles issues with column information" do
     original_issue = %Credo.Issue{column: 10, line_no: 42, filename: "here.ex"}
 
