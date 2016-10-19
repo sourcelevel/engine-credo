@@ -19,4 +19,17 @@ defmodule EngineCredo.FormatterTest do
 
     assert expected_output == output
   end
+
+  test "prints a warning for each invalid source file detected" do
+    output = capture_io(:stderr, fn ->
+      Config.read
+      |> Formatter.error
+    end)
+
+    first_error = "Invalid file detected test/fixtures/project_root/lib/invalid_elixir.exs\n"
+    second_error = "Invalid file detected test/fixtures/project_root/lib/non_utf8.exs\n"
+    expected_output = first_error <> second_error
+
+    assert expected_output == output
+  end
 end
