@@ -27,7 +27,7 @@ defmodule EngineCredo.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [
-      {:credo, "~> 0.4"},
+      {:credo, github: "rrrene/credo"},
       {:poison, "~> 2.2"}
     ]
   end

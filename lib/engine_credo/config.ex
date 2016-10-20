@@ -13,7 +13,8 @@ defmodule EngineCredo.Config do
   defstruct source_code_path: nil,
             engine_config: nil,
             credo_config: nil,
-            source_files: []
+            source_files: [],
+            invalid_files: []
 
   def read, do: read(%__MODULE__{})
 
@@ -35,9 +36,9 @@ defmodule EngineCredo.Config do
       |> Credo.Config.read_or_default(nil, true) # true required for safe loading of `.credo.exs`
       |> include_files_from(engine_config, path)
 
-    source_files = valid_source_files(credo_config)
+    {source_files, invalid_files} = find_source_files(credo_config)
 
-    %{config | credo_config: credo_config, source_files: source_files}
+    %{config | credo_config: credo_config, source_files: source_files, invalid_files: invalid_files}
   end
 
   def read(source_code_path, engine_config_file) do
@@ -66,10 +67,10 @@ defmodule EngineCredo.Config do
 
   # Filter out malformed Elixir files and also valid Elixir files with an unknown
   # file extension (`.ex` or `.exs`).
-  defp valid_source_files(config) do
+  defp find_source_files(config) do
     config
     |> Credo.Sources.find
-    |> Enum.filter(&(&1.valid?))
     |> Enum.filter(&String.ends_with?(&1.filename, [".ex", ".exs"]))
+    |> Enum.partition(&(&1.valid?))
   end
 end

@@ -47,6 +47,17 @@ defmodule EngineCredo.ConfigTest do
     assert "test/fixtures/project_root/lib/design_issues.exs" == file
   end
 
+  test "finds elixir that are not valid to check" do
+    %{invalid_files: files} = Config.read
+
+    expected_invalid_files = [
+      "test/fixtures/project_root/lib/invalid_elixir.exs",
+      "test/fixtures/project_root/lib/non_utf8.exs"
+    ]
+
+    assert expected_invalid_files == Enum.map(files, &(&1.filename))
+  end
+
   test "filters out valid files with unknown extensions" do
     engine_config = %{
       "include_paths" => ["valid_elixir_invalid_extension.txt"]
