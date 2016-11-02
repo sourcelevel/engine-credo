@@ -8,11 +8,16 @@ defmodule EngineCredo.CLI do
 
   alias EngineCredo.{Config,Runner,Formatter}
 
+  @lint {~r/Inspect/, false}
   def main(argv) do
     config = apply(Config, :read, Enum.take(argv, 2))
 
     config
     |> Runner.check
     |> Formatter.print
+  rescue
+    error ->
+      IO.inspect(:stderr, error, [])
+      System.halt(1)
   end
 end
