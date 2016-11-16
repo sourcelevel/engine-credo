@@ -8,9 +8,21 @@ defmodule EngineCredo.Issue do
 
   @derive [Poison.Encoder]
 
+  @remediation_points %{
+    "Bug Risk" => 100_000,
+    "Clarity" => 50_000,
+    "Compatibility" => 50_000,
+    "Complexity" => 100_000,
+    "Duplication" => 100_000,
+    "Performance" => 50_000,
+    "Security" => 100_000,
+    "Style" => 50_000,
+  }
+
   defstruct type: nil,
             check_name: nil,
             description: nil,
+            remediation_points: nil,
             categories: [],
             location: %{}
 
@@ -22,12 +34,14 @@ defmodule EngineCredo.Issue do
   """
   def convert(issue, path_prefix \\ "") do
     issue = update_in(issue.filename, &Path.relative_to(&1, path_prefix))
+    category = EngineCredo.IssueCategories.for_check(issue.check)
 
     %EngineCredo.Issue{
       type: "issue",
       check_name: issue.check,
       description: issue.message,
-      categories: EngineCredo.IssueCategories.for_check(issue.check),
+      remediation_points: @remediation_points[category],
+      categories: [category],
       location: locations(issue)
     }
   end

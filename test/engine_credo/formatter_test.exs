@@ -12,8 +12,8 @@ defmodule EngineCredo.FormatterTest do
       |> Formatter.print
     end)
 
-    first_issue = ~S({"type":"issue","location":{"path":"lib/design_issues.exs","lines":{"end":4,"begin":4}},"description":"Found a TODO tag in a comment: # TODO: issue","check_name":"Elixir.Credo.Check.Design.TagTODO","categories":["Bug Risk"]})
-    second_issue = ~S({"type":"issue","location":{"path":"lib/design_issues.exs","lines":{"end":5,"begin":5}},"description":"Found a FIXME tag in a comment: # FIXME: issue","check_name":"Elixir.Credo.Check.Design.TagFIXME","categories":["Bug Risk"]})
+    first_issue = ~S({"type":"issue","remediation_points":100000,"location":{"path":"lib/design_issues.exs","lines":{"end":4,"begin":4}},"description":"Found a TODO tag in a comment: # TODO: issue","check_name":"Elixir.Credo.Check.Design.TagTODO","categories":["Bug Risk"]})
+    second_issue = ~S({"type":"issue","remediation_points":100000,"location":{"path":"lib/design_issues.exs","lines":{"end":5,"begin":5}},"description":"Found a FIXME tag in a comment: # FIXME: issue","check_name":"Elixir.Credo.Check.Design.TagFIXME","categories":["Bug Risk"]})
 
     expected_output = first_issue <> "\0\n" <> second_issue <> "\0\n"
 
