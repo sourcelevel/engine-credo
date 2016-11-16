@@ -4,9 +4,8 @@ defmodule EngineCredo.IssueCategoriesTest do
   alias EngineCredo.IssueCategories
 
   test "gets a list of code climate issues for a known credo check" do
+    categories = IssueCategories.for_check(Credo.Check.Warning.IExPry)
 
-    cateogries = IssueCategories.for_check(Credo.Check.Warning.IExPry)
-
-    assert cateogries == ["Bug Risk"]
+    assert categories == "Bug Risk"
   end
 end
