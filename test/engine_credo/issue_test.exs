@@ -4,7 +4,7 @@ defmodule EngineCredo.IssueTest do
   alias EngineCredo.Issue
 
   test "handles columnless (line only) issues" do
-    original_issue = %Credo.Issue{column: nil, line_no: 42, filename: "here.ex"}
+    original_issue = %Credo.Issue{column: nil, line_no: 42, filename: "here.ex", check: Credo.Check.Consistency.TabsOrSpaces}
 
     %Issue{location: converted_location} = Issue.convert(original_issue)
 
@@ -15,7 +15,7 @@ defmodule EngineCredo.IssueTest do
   end
 
   test "handles issues without line information" do
-    original_issue = %Credo.Issue{column: nil, filename: "file.ex"}
+    original_issue = %Credo.Issue{column: nil, filename: "file.ex", check: Credo.Check.Consistency.TabsOrSpaces}
 
     %Issue{location: converted_location} = Issue.convert(original_issue)
 
@@ -26,7 +26,7 @@ defmodule EngineCredo.IssueTest do
   end
 
   test "handles issues with column information" do
-    original_issue = %Credo.Issue{column: 10, line_no: 42, filename: "here.ex"}
+    original_issue = %Credo.Issue{column: 10, line_no: 42, filename: "here.ex", check: Credo.Check.Consistency.TabsOrSpaces}
 
     %Issue{location: converted_location} = Issue.convert(original_issue)
 
@@ -40,7 +40,7 @@ defmodule EngineCredo.IssueTest do
   end
 
   test "emits paths relative to the given prefix" do
-    original_issue = %Credo.Issue{line_no: 42, filename: "/the/project/lib/module/here.ex"}
+    original_issue = %Credo.Issue{line_no: 42, filename: "/the/project/lib/module/here.ex", check: Credo.Check.Consistency.TabsOrSpaces}
 
     %Issue{location: %{path: converted_path}} = Issue.convert(original_issue, "/the/project")
 
