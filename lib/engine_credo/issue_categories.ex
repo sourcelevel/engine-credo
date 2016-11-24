@@ -13,6 +13,7 @@ defmodule EngineCredo.IssueCategories do
     Credo.Check.Consistency.SpaceAroundOperators => "Style",
     Credo.Check.Consistency.SpaceInParentheses => "Style",
     Credo.Check.Consistency.TabsOrSpaces => "Style",
+    Credo.Check.Consistency.ParameterPatternMatching => "Style",
 
     Credo.Check.Design.AliasUsage => "Clarity",
     Credo.Check.Design.DuplicatedCode => "Duplication",
