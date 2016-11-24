@@ -1,4 +1,4 @@
-FROM msaraiva/elixir-dev:1.3.1
+FROM msaraiva/elixir-dev:1.3.4
 MAINTAINER Plataformatec <opensource@plataformatec.com.br>
 
 WORKDIR /usr/src/engine
