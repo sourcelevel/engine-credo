@@ -25,6 +25,8 @@ config :engine_credo,
   source_code_path: "/code",
   engine_config_file: "/config.json"
 
+config :logger, :console, device: :standard_error
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"
