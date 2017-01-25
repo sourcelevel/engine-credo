@@ -14,6 +14,7 @@ defmodule EngineCredo.IssueCategories do
     Credo.Check.Consistency.SpaceInParentheses => "Style",
     Credo.Check.Consistency.TabsOrSpaces => "Style",
     Credo.Check.Consistency.ParameterPatternMatching => "Style",
+    Credo.Check.Consistency.MultiAliasImportRequireUse => "Style",
 
     Credo.Check.Design.AliasUsage => "Clarity",
     Credo.Check.Design.DuplicatedCode => "Duplication",
@@ -33,6 +34,10 @@ defmodule EngineCredo.IssueCategories do
     Credo.Check.Readability.TrailingBlankLine => "Style",
     Credo.Check.Readability.TrailingWhiteSpace => "Style",
     Credo.Check.Readability.VariableNames => "Style",
+    Credo.Check.Readability.PreferImplicitTry => "Style",
+    Credo.Check.Readability.SinglePipe => "Style",
+    Credo.Check.Readability.Specs => "Style",
+    Credo.Check.Readability.StringSigils => "Style",
 
     Credo.Check.Refactor.ABCSize => "Complexity",
     Credo.Check.Refactor.CondStatements => "Complexity",
@@ -45,6 +50,8 @@ defmodule EngineCredo.IssueCategories do
     Credo.Check.Refactor.PerceivedComplexity => "Complexity",
     Credo.Check.Refactor.PipeChainStart => "Clarity",
     Credo.Check.Refactor.UnlessWithElse => "Style",
+    Credo.Check.Refactor.DoubleBooleanNegation => "Style",
+    Credo.Check.Refactor.VariableRebinding => "Clarity",
 
     Credo.Check.Warning.BoolOperationOnSameValues => "Bug Risk",
     Credo.Check.Warning.IExPry => "Bug Risk",
@@ -101,7 +108,7 @@ defmodule EngineCredo.IssueCategories do
     |> Kernel.--(Map.keys(@lookup_table))
 
     if Enum.any?(missing_checks) do
-      raise "Missing category mapping for #{Enum.join(missing_checks, ", ")}."
+      raise "Missing category mapping for:\n * #{Enum.join(missing_checks, "\n * ")}."
     end
   end
 
