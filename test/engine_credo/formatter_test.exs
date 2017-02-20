@@ -22,8 +22,7 @@ defmodule EngineCredo.FormatterTest do
 
   test "prints a warning for each invalid source file detected" do
     output = capture_io(:stderr, fn ->
-      Config.read
-      |> Formatter.error
+      Formatter.error(Config.read)
     end)
 
     first_error = "Invalid file detected test/fixtures/project_root/lib/invalid_elixir.exs\n"
