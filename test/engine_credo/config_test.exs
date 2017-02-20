@@ -43,8 +43,12 @@ defmodule EngineCredo.ConfigTest do
   test "finds elixir files to check" do
     %{source_files: files} = Config.read
 
-    [%Credo.SourceFile{filename: file}] = files
-    assert "test/fixtures/project_root/lib/design_issues.exs" == file
+    found_files = [
+      "test/fixtures/project_root/lib/design_issues.exs",
+      "test/fixtures/project_root/lib/ignore_via_attribute.exs"
+    ]
+
+    assert found_files == Enum.map(files, &(&1.filename))
   end
 
   test "finds elixir that are not valid to check" do

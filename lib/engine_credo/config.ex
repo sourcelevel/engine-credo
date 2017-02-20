@@ -37,8 +37,9 @@ defmodule EngineCredo.Config do
       |> include_files_from(engine_config, path)
 
     {source_files, invalid_files} = find_source_files(credo_config)
+    inline_configuration = find_inline_configuration(source_files)
 
-    %{config | credo_config: credo_config, source_files: source_files, invalid_files: invalid_files}
+    %{config | credo_config: %{credo_config | lint_attribute_map: inline_configuration}, source_files: source_files, invalid_files: invalid_files}
   end
 
   def read(source_code_path, engine_config_file) do
@@ -72,5 +73,13 @@ defmodule EngineCredo.Config do
     |> Credo.Sources.find
     |> Enum.filter(&String.ends_with?(&1.filename, [".ex", ".exs"]))
     |> Enum.partition(&(&1.valid?))
+  end
+
+  defp find_inline_configuration(source_files) do
+    source_files
+    |> Credo.Check.FindLintAttributes.run([])
+    |> Enum.reduce(%{}, fn(source_file, inline_configuration) ->
+      Map.put(inline_configuration, source_file.filename, source_file.lint_attributes)
+    end)
   end
 end
