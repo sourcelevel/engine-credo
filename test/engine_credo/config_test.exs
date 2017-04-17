@@ -14,7 +14,7 @@ defmodule EngineCredo.ConfigTest do
     ]
 
     assert expected_included_paths == config.files.included
-    assert Enum.member?(config.checks, {Credo.Check.Refactor.ABCSize})
+    assert Enum.member?(config.checks, {Credo.Check.Warning.IExPry})
   end
 
   test "merges paths from the engine config" do

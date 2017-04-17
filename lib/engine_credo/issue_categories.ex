@@ -29,15 +29,18 @@ defmodule EngineCredo.IssueCategories do
     Credo.Check.Readability.ModuleNames => "Style",
     Credo.Check.Readability.NoParenthesesWhenZeroArity => "Style",
     Credo.Check.Readability.ParenthesesInCondition => "Style",
+    Credo.Check.Readability.ParenthesesOnZeroArityDefs => "Style",
     Credo.Check.Readability.PredicateFunctionNames => "Style",
+    Credo.Check.Readability.PreferImplicitTry => "Style",
     Credo.Check.Readability.RedundantBlankLines => "Style",
+    Credo.Check.Readability.Semicolons => "Style",
+    Credo.Check.Readability.SinglePipe => "Style",
+    Credo.Check.Readability.SpaceAfterCommas => "Style",
+    Credo.Check.Readability.Specs => "Style",
+    Credo.Check.Readability.StringSigils => "Style",
     Credo.Check.Readability.TrailingBlankLine => "Style",
     Credo.Check.Readability.TrailingWhiteSpace => "Style",
     Credo.Check.Readability.VariableNames => "Style",
-    Credo.Check.Readability.PreferImplicitTry => "Style",
-    Credo.Check.Readability.SinglePipe => "Style",
-    Credo.Check.Readability.Specs => "Style",
-    Credo.Check.Readability.StringSigils => "Style",
 
     Credo.Check.Refactor.ABCSize => "Complexity",
     Credo.Check.Refactor.CondStatements => "Complexity",
@@ -52,6 +55,7 @@ defmodule EngineCredo.IssueCategories do
     Credo.Check.Refactor.UnlessWithElse => "Style",
     Credo.Check.Refactor.DoubleBooleanNegation => "Style",
     Credo.Check.Refactor.VariableRebinding => "Clarity",
+    Credo.Check.Refactor.AppendSingleItem => "Clarity",
 
     Credo.Check.Warning.BoolOperationOnSameValues => "Bug Risk",
     Credo.Check.Warning.IExPry => "Bug Risk",
@@ -70,6 +74,8 @@ defmodule EngineCredo.IssueCategories do
     Credo.Check.Warning.UnusedRegexOperation => "Bug Risk",
     Credo.Check.Warning.UnusedStringOperation => "Bug Risk",
     Credo.Check.Warning.UnusedTupleOperation => "Bug Risk",
+    Credo.Check.Warning.LazyLogging => "Style",
+    Credo.Check.Warning.MapGetUnsafePass => "Bug Risk",
 
     # Deprecated checks
     Credo.Check.Refactor.CaseTrivialMatches => "Clarity"

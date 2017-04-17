@@ -33,8 +33,10 @@ defmodule EngineCredo.Config do
   def read(%__MODULE__{source_code_path: path, engine_config: engine_config} = config) do
     credo_config =
       path
-      |> Credo.Config.read_or_default(nil, true) # true required for safe loading of `.credo.exs`
+      |> Credo.ConfigFile.read_or_default(nil, true) # true required for safe loading of `.credo.exs`
+      |> cast_to_config
       |> include_files_from(engine_config, path)
+
 
     {source_files, invalid_files} = find_source_files(credo_config)
     inline_configuration = find_inline_configuration(source_files)
@@ -45,6 +47,17 @@ defmodule EngineCredo.Config do
   def read(source_code_path, engine_config_file) do
     engine_config = read_engine_config(engine_config_file)
     read(%__MODULE__{source_code_path: source_code_path, engine_config: engine_config})
+  end
+
+  def cast_to_config(%Credo.ConfigFile{} = config_file) do
+    %Credo.Config{
+      files: config_file.files,
+      checks: config_file.checks,
+      requires: config_file.requires,
+      strict: config_file.strict,
+      color: false,
+      check_for_updates: false
+    }
   end
 
   defp read_engine_config(config_file) do
