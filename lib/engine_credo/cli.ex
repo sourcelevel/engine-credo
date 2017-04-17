@@ -17,7 +17,7 @@ defmodule EngineCredo.CLI do
     |> Formatter.print
   rescue
     error ->
-      IO.inspect(:stderr, error, [])
+      IO.puts(:stderr, Exception.format(:error, error))
       System.halt(1)
   end
 end
