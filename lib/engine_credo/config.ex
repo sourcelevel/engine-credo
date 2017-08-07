@@ -36,10 +36,13 @@ defmodule EngineCredo.Config do
       |> Credo.ConfigFile.read_or_default(nil, true) # true required for safe loading of `.credo.exs`
       |> cast_to_config
       |> include_files_from(engine_config, path)
-
+      |> Credo.Execution.SourceFiles.start_server
+      |> Credo.Execution.Issues.start_server
+      |> Credo.CLI.Output.UI.use_colors
 
     {source_files, invalid_files} = find_source_files(credo_config)
-    inline_configuration = find_inline_configuration(source_files)
+    Credo.Execution.put_source_files(credo_config, source_files)
+    inline_configuration = find_inline_configuration(source_files, credo_config)
 
     %{config | credo_config: %{credo_config | lint_attribute_map: inline_configuration}, source_files: source_files, invalid_files: invalid_files}
   end
@@ -50,7 +53,7 @@ defmodule EngineCredo.Config do
   end
 
   def cast_to_config(%Credo.ConfigFile{} = config_file) do
-    %Credo.Config{
+    %Credo.Execution{
       files: config_file.files,
       checks: config_file.checks,
       requires: config_file.requires,
@@ -88,11 +91,9 @@ defmodule EngineCredo.Config do
     |> Enum.partition(&(&1.valid?))
   end
 
-  defp find_inline_configuration(source_files) do
+  defp find_inline_configuration(source_files, credo_config) do
     source_files
-    |> Credo.Check.FindLintAttributes.run([])
-    |> Enum.reduce(%{}, fn(source_file, inline_configuration) ->
-      Map.put(inline_configuration, source_file.filename, source_file.lint_attributes)
-    end)
+    |> Credo.Check.FindLintAttributes.run(credo_config, [])
+    |> Enum.into(%{})
   end
 end
