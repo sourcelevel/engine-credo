@@ -1,9 +1,6 @@
 defmodule EngineCredo.IssueCategories do
   @moduledoc """
   Mapping of categories from Credo to Code Climate.
-
-  Additional configuration is provided by the Code Climate engine config, which
-  is a JSON file (`/config.json`) residing at the container root by default.
   """
   @after_compile __MODULE__
 
@@ -56,6 +53,7 @@ defmodule EngineCredo.IssueCategories do
     Credo.Check.Refactor.DoubleBooleanNegation => "Style",
     Credo.Check.Refactor.VariableRebinding => "Clarity",
     Credo.Check.Refactor.AppendSingleItem => "Clarity",
+    Credo.Check.Refactor.LongQuoteBlocks => "Clarity",
 
     Credo.Check.Warning.BoolOperationOnSameValues => "Bug Risk",
     Credo.Check.Warning.IExPry => "Bug Risk",
@@ -76,12 +74,14 @@ defmodule EngineCredo.IssueCategories do
     Credo.Check.Warning.UnusedTupleOperation => "Bug Risk",
     Credo.Check.Warning.LazyLogging => "Style",
     Credo.Check.Warning.MapGetUnsafePass => "Bug Risk",
+    Credo.Check.Warning.RaiseInsideRescue => "Clarity",
 
     # Deprecated checks
     Credo.Check.Refactor.CaseTrivialMatches => "Clarity"
   }
 
   @helper_modules [
+    Credo.Check.ConfigCommentFinder,
     Credo.Check.Design.TagHelper,
     Credo.Check.FindLintAttributes,
     Credo.Check.Warning.UnusedFunctionReturnHelper
