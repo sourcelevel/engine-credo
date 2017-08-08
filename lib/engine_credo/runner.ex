@@ -9,17 +9,17 @@ defmodule EngineCredo.Runner do
   alias Credo.CLI.Filter
   alias Credo.Execution
 
-  def check(%Config{credo_config: config, source_files: files, source_code_path: path_prefix}) do
-    :ok = Credo.Check.Runner.run(files, config)
+  def check(%Config{execution: execution, source_files: files, source_code_path: path_prefix}) do
+    :ok = Credo.Check.Runner.run(files, execution)
 
-    issues = Execution.get_issues(config)
+    issues = Execution.get_issues(execution)
 
-    extract_issues(issues, path_prefix, config)
+    extract_issues(issues, path_prefix, execution)
   end
 
-  defp extract_issues(issues, path_prefix, config) do
+  defp extract_issues(issues, path_prefix, execution) do
     issues
-    |> Filter.valid_issues(config)
+    |> Filter.valid_issues(execution)
     |> Enum.map(&Issue.convert(&1, path_prefix))
   end
 end

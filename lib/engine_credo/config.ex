@@ -11,7 +11,7 @@ defmodule EngineCredo.Config do
   @engine_config_file Application.get_env(:engine_credo, :engine_config_file)
 
   defstruct source_code_path: nil,
-            credo_config: nil,
+            execution: nil,
             source_files: [],
             invalid_files: []
 
@@ -33,7 +33,7 @@ defmodule EngineCredo.Config do
       source_code_path: path,
       source_files: source_files,
       invalid_files: invalid_files,
-      credo_config: execution
+      execution: execution
     }
   end
 

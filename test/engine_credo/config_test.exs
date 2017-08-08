@@ -4,7 +4,7 @@ defmodule EngineCredo.ConfigTest do
   alias EngineCredo.Config
 
   test "configures the credo engine for a given path" do
-    %{credo_config: config} = Config.read
+    %{execution: execution} = Config.read
 
     expected_included_paths = [
       "test/fixtures/project_root/lib/**/*.{ex,exs}",
@@ -13,8 +13,8 @@ defmodule EngineCredo.ConfigTest do
       "test/fixtures/project_root/apps"
     ]
 
-    assert expected_included_paths == config.files.included
-    assert Enum.member?(config.checks, {Credo.Check.Warning.IExPry})
+    assert expected_included_paths == execution.files.included
+    assert Enum.member?(execution.checks, {Credo.Check.Warning.IExPry})
   end
 
   test "merges paths from the engine config" do
@@ -26,7 +26,7 @@ defmodule EngineCredo.ConfigTest do
       ]
     }
 
-    %{credo_config: config} = Config.read(source_code_path(), config_path)
+    %{execution: execution} = Config.read(source_code_path(), config_path)
 
     expected_included_paths = [
       "test/fixtures/project_root/lib/**/*.{ex,exs}",
@@ -37,7 +37,7 @@ defmodule EngineCredo.ConfigTest do
       "test/fixtures/project_root/other/no_issues.exs"
     ]
 
-    assert expected_included_paths == config.files.included
+    assert expected_included_paths == execution.files.included
   end
 
   test "finds elixir files to check" do
