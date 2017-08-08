@@ -8,7 +8,6 @@ defmodule EngineCredo.CLI do
 
   alias EngineCredo.{Config, Runner, Formatter}
 
-  @lint {~r/Inspect/, false}
   def main(argv) do
     config = apply(Config, :read, Enum.take(argv, 2))
 
@@ -17,6 +16,7 @@ defmodule EngineCredo.CLI do
     |> Formatter.print
   rescue
     error ->
+      # credo:disable-for-next-line Credo.Check.Warning.IoInspect
       IO.puts(:stderr, Exception.format(:error, error))
       System.halt(1)
   end
