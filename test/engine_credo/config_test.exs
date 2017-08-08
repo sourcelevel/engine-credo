@@ -45,7 +45,8 @@ defmodule EngineCredo.ConfigTest do
 
     found_files = [
       "test/fixtures/project_root/lib/design_issues.exs",
-      "test/fixtures/project_root/lib/ignore_via_attribute.exs"
+      "test/fixtures/project_root/lib/ignore_via_attribute.exs",
+      "test/fixtures/project_root/lib/ignore_via_comment.exs"
     ]
 
     assert found_files == Enum.map(files, &(&1.filename))

@@ -27,7 +27,10 @@ defmodule EngineCredo.Config do
     execution = build_execution(path, engine_config)
 
     {source_files, invalid_files} = find_source_files(execution)
-    execution = load_inline_configuration(execution, source_files)
+    execution =
+      execution
+      |> load_inline_configuration(source_files)
+      |> load_comment_configuration(source_files)
 
     %__MODULE__{
       source_code_path: path,
@@ -88,13 +91,22 @@ defmodule EngineCredo.Config do
   end
 
   # TODO: Remove this once stop supporting the inline attribute configuration.
-  def load_inline_configuration(execution, source_files) do
+  defp load_inline_configuration(execution, source_files) do
     lint_configuration =
       source_files
       |> Credo.Check.FindLintAttributes.run(execution, [])
       |> Enum.into(%{})
 
     %Credo.Execution{execution | lint_attribute_map: lint_configuration}
+  end
+
+  defp load_comment_configuration(execution, source_files) do
+    comment_configuration =
+      source_files
+      |> Credo.Check.ConfigCommentFinder.run(execution, [])
+      |> Enum.into(%{})
+
+    %Credo.Execution{execution | config_comment_map: comment_configuration}
   end
 
   defp boostrap(execution) do
