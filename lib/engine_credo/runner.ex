@@ -5,7 +5,7 @@ defmodule EngineCredo.Runner do
   `EngineCredo.Issue` for proper output formatting.
   """
 
-  alias EngineCredo.{Issue,Config}
+  alias EngineCredo.{Issue, Config}
   alias Credo.CLI.Filter
   alias Credo.Execution
 

@@ -6,7 +6,7 @@ defmodule EngineCredo.CLI do
   where the source files are located.
   """
 
-  alias EngineCredo.{Config,Runner,Formatter}
+  alias EngineCredo.{Config, Runner, Formatter}
 
   @lint {~r/Inspect/, false}
   def main(argv) do

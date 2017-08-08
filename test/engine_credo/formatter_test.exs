@@ -3,7 +3,7 @@ defmodule EngineCredo.FormatterTest do
 
   import ExUnit.CaptureIO
 
-  alias EngineCredo.{Config,Formatter,Runner}
+  alias EngineCredo.{Config, Formatter, Runner}
 
   test "prints issues as JSON separated by \\0 and \\n" do
     output = capture_io(fn ->
