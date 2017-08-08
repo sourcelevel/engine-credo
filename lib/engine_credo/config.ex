@@ -43,7 +43,7 @@ defmodule EngineCredo.Config do
   defp read_engine_config(engine_config_file) do
     engine_config_file
     |> File.read!
-    |> Poison.Parser.parse!
+    |> Poison.decode!
   end
 
   defp build_execution(path, engine_config) do
