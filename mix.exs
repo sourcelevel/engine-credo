@@ -13,7 +13,7 @@ defmodule EngineCredo.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger, :credo, :poison]]
+    [extra_applications: [:logger]]
   end
 
   # Dependencies can be Hex packages:
@@ -28,7 +28,8 @@ defmodule EngineCredo.Mixfile do
   defp deps do
     [
       {:credo, "~> 0.4"},
-      {:poison, "~> 2.2"}
+      {:poison, "~> 2.2"},
+      {:briefly, "~> 0.3", only: :test}
     ]
   end
 

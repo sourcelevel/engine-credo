@@ -18,7 +18,7 @@ defmodule EngineCredo.ConfigTest do
   end
 
   test "merges paths from the engine config" do
-    engine_config = %{
+    config_path = write_config %{
       "include_paths" => [
         "src/",
         "extra/",
@@ -26,7 +26,7 @@ defmodule EngineCredo.ConfigTest do
       ]
     }
 
-    %{credo_config: config} = Config.read(%Config{engine_config: engine_config})
+    %{credo_config: config} = Config.read(source_code_path(), config_path)
 
     expected_included_paths = [
       "test/fixtures/project_root/lib/**/*.{ex,exs}",
@@ -63,11 +63,11 @@ defmodule EngineCredo.ConfigTest do
   end
 
   test "filters out valid files with unknown extensions" do
-    engine_config = %{
+    config_path = write_config %{
       "include_paths" => ["valid_elixir_invalid_extension.txt"]
     }
 
-    %{source_files: files} = Config.read(%Config{engine_config: engine_config})
+    %{source_files: files} = Config.read(source_code_path(), config_path)
 
     contains_invalid_file = Enum.any?(files,
       &(&1.filename == "test/fixtures/project_root/valid_elixir_invalid_extension.txt")
@@ -75,4 +75,12 @@ defmodule EngineCredo.ConfigTest do
 
     refute contains_invalid_file
   end
+
+  defp write_config(config) do
+    {:ok, path} = Briefly.create
+    File.write!(path, Poison.encode!(config))
+    path
+  end
+
+  defp source_code_path, do: Application.get_env(:engine_credo, :source_code_path)
 end
