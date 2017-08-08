@@ -94,7 +94,7 @@ defmodule EngineCredo.Config do
       |> Credo.Check.FindLintAttributes.run(execution, [])
       |> Enum.into(%{})
 
-    %Credo.Execution{execution | lint_attribute_map: lint_configuration }
+    %Credo.Execution{execution | lint_attribute_map: lint_configuration}
   end
 
   defp boostrap(execution) do

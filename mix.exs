@@ -4,7 +4,7 @@ defmodule EngineCredo.Mixfile do
   def project do
     [app: :engine_credo,
      version: "0.1.0",
-     elixir: "~> 1.3",
+     elixir: "~> 1.5",
      escript: escript(),
      deps: deps()]
   end
