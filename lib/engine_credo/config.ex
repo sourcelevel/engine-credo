@@ -11,88 +11,108 @@ defmodule EngineCredo.Config do
   @engine_config_file Application.get_env(:engine_credo, :engine_config_file)
 
   defstruct source_code_path: nil,
-            engine_config: nil,
-            credo_config: nil,
+            execution: nil,
             source_files: [],
             invalid_files: []
 
-  def read, do: read(%__MODULE__{})
-
-  def read(source_code_path) when is_binary(source_code_path) do
-    read(%__MODULE__{source_code_path: source_code_path})
-  end
-
-  def read(%__MODULE__{source_code_path: nil} = config) do
-    read(%{config | source_code_path: @source_code_path})
-  end
-
-  def read(%__MODULE__{engine_config: nil} = config) do
-    read(%{config | engine_config: read_engine_config(@engine_config_file)})
-  end
-
-  def read(%__MODULE__{source_code_path: path, engine_config: engine_config} = config) do
-    credo_config =
-      path
-      |> Credo.ConfigFile.read_or_default(nil, true) # true required for safe loading of `.credo.exs`
-      |> cast_to_config
-      |> include_files_from(engine_config, path)
-
-
-    {source_files, invalid_files} = find_source_files(credo_config)
-    inline_configuration = find_inline_configuration(source_files)
-
-    %{config | credo_config: %{credo_config | lint_attribute_map: inline_configuration}, source_files: source_files, invalid_files: invalid_files}
-  end
+  def read, do: read(@source_code_path, @engine_config_file)
 
   def read(source_code_path, engine_config_file) do
     engine_config = read_engine_config(engine_config_file)
-    read(%__MODULE__{source_code_path: source_code_path, engine_config: engine_config})
+
+    load(source_code_path, engine_config)
   end
 
-  def cast_to_config(%Credo.ConfigFile{} = config_file) do
-    %Credo.Config{
+  defp load(path, engine_config) do
+    execution = build_execution(path, engine_config)
+
+    {source_files, invalid_files} = find_source_files(execution)
+    execution =
+      execution
+      |> load_inline_configuration(source_files)
+      |> load_comment_configuration(source_files)
+
+    %__MODULE__{
+      source_code_path: path,
+      source_files: source_files,
+      invalid_files: invalid_files,
+      execution: execution
+    }
+  end
+
+  defp read_engine_config(engine_config_file) do
+    engine_config_file
+    |> File.read!
+    |> Poison.decode!
+  end
+
+  defp build_execution(path, engine_config) do
+    path
+    |> read_config_file
+    |> create_struct
+    |> include_files_from(path, engine_config)
+    |> boostrap
+  end
+
+  defp read_config_file(path) do
+    Credo.ConfigFile.read_or_default(path, nil, true) # true required for safe loading of `.credo.exs`.
+  end
+
+  defp create_struct(%Credo.ConfigFile{} = config_file) do
+    %Credo.Execution{
       files: config_file.files,
       checks: config_file.checks,
       requires: config_file.requires,
       strict: config_file.strict,
-      color: false,
-      check_for_updates: false
+      color: false
     }
   end
 
-  defp read_engine_config(config_file) do
-    config_file
-    |> File.read!
-    |> Poison.Parser.parse!
-  end
-
-  defp include_files_from(config, engine_config, source_path) do
-    files_from_engine_config =
+  defp include_files_from(execution, path, engine_config) do
+    include_paths =
       engine_config["include_paths"]
       |> List.wrap
-      |> Enum.map(&Path.join(source_path, &1))
+      |> Enum.map(&Path.join(path, &1))
 
-    update_in config.files[:included], fn files ->
+    update_in execution.files[:included], fn files ->
       files
-      |> Enum.concat(files_from_engine_config)
+      |> Enum.concat(include_paths)
       |> Enum.uniq
     end
   end
 
   # Filter out malformed Elixir files and also valid Elixir files with an unknown
   # file extension (`.ex` or `.exs`).
-  defp find_source_files(config) do
-    config
+  defp find_source_files(execution) do
+    execution
     |> Credo.Sources.find
     |> Enum.filter(&String.ends_with?(&1.filename, [".ex", ".exs"]))
-    |> Enum.partition(&(&1.valid?))
+    |> Enum.split_with(&(&1.valid?))
   end
 
-  defp find_inline_configuration(source_files) do
-    source_files
-    |> Credo.Check.FindLintAttributes.run([])
-    |> Enum.reduce(%{}, fn(source_file, inline_configuration) ->
-      Map.put(inline_configuration, source_file.filename, source_file.lint_attributes)
-    end)
+  # TODO: Remove this once stop supporting the inline attribute configuration.
+  defp load_inline_configuration(execution, source_files) do
+    lint_configuration =
+      source_files
+      |> Credo.Check.FindLintAttributes.run(execution, [])
+      |> Enum.into(%{})
+
+    %Credo.Execution{execution | lint_attribute_map: lint_configuration}
+  end
+
+  defp load_comment_configuration(execution, source_files) do
+    comment_configuration =
+      source_files
+      |> Credo.Check.ConfigCommentFinder.run(execution, [])
+      |> Enum.into(%{})
+
+    %Credo.Execution{execution | config_comment_map: comment_configuration}
+  end
+
+  defp boostrap(execution) do
+    execution
+    |> Credo.Execution.Issues.start_server
+    # TODO: Remove this once stop supporting the inline attribute configuration.
+    |> Credo.CLI.Output.UI.use_colors
   end
 end

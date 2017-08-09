@@ -3,7 +3,7 @@ defmodule EngineCredo.FormatterTest do
 
   import ExUnit.CaptureIO
 
-  alias EngineCredo.{Config,Formatter,Runner}
+  alias EngineCredo.{Config, Formatter, Runner}
 
   test "prints issues as JSON separated by \\0 and \\n" do
     output = capture_io(fn ->
@@ -29,6 +29,6 @@ defmodule EngineCredo.FormatterTest do
     second_error = "Invalid file detected test/fixtures/project_root/lib/non_utf8.exs\n"
     expected_output = first_error <> second_error
 
-    assert expected_output == output
+    assert String.contains?(output, expected_output)
   end
 end

@@ -1,7 +1,7 @@
 defmodule EngineCredo.RunnerTest do
   use ExUnit.Case
 
-  alias EngineCredo.{Config,Runner}
+  alias EngineCredo.{Config, Runner}
 
   test "finds credo issues for the given source files" do
     checked_files =
