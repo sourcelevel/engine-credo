@@ -9,6 +9,7 @@ defmodule EngineCredo.ConfigTest do
     expected_included_paths = [
       "test/fixtures/project_root/lib/**/*.{ex,exs}",
       "test/fixtures/project_root/src",
+      "test/fixtures/project_root/test/**/*.{ex,exs}",
       "test/fixtures/project_root/web",
       "test/fixtures/project_root/apps"
     ]
@@ -31,6 +32,7 @@ defmodule EngineCredo.ConfigTest do
     expected_included_paths = [
       "test/fixtures/project_root/lib/**/*.{ex,exs}",
       "test/fixtures/project_root/src",
+      "test/fixtures/project_root/test/**/*.{ex,exs}",
       "test/fixtures/project_root/web",
       "test/fixtures/project_root/apps",
       "test/fixtures/project_root/extra",

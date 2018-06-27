@@ -18,6 +18,7 @@ defmodule EngineCredo.IssueCategories do
     Credo.Check.Design.TagFIXME => "Bug Risk",
     Credo.Check.Design.TagTODO => "Bug Risk",
 
+    Credo.Check.Readability.AliasOrder => "Style",
     Credo.Check.Readability.FunctionNames => "Style",
     Credo.Check.Readability.LargeNumbers => "Style",
     Credo.Check.Readability.MaxLineLength => "Style",
@@ -29,6 +30,7 @@ defmodule EngineCredo.IssueCategories do
     Credo.Check.Readability.ParenthesesOnZeroArityDefs => "Style",
     Credo.Check.Readability.PredicateFunctionNames => "Style",
     Credo.Check.Readability.PreferImplicitTry => "Style",
+    Credo.Check.Readability.PreferUnquotedAtoms => "Style",
     Credo.Check.Readability.RedundantBlankLines => "Style",
     Credo.Check.Readability.Semicolons => "Style",
     Credo.Check.Readability.SinglePipe => "Style",
@@ -75,6 +77,7 @@ defmodule EngineCredo.IssueCategories do
     Credo.Check.Warning.LazyLogging => "Style",
     Credo.Check.Warning.MapGetUnsafePass => "Bug Risk",
     Credo.Check.Warning.RaiseInsideRescue => "Clarity",
+    Credo.Check.Warning.ExpensiveEmptyEnumCheck => "Complexity",
 
     # Deprecated checks
     Credo.Check.Refactor.CaseTrivialMatches => "Clarity"
