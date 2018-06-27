@@ -27,7 +27,7 @@ defmodule EngineCredo.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [
-      {:credo, "~> 0.8"},
+      {:credo, "~> 0.9"},
       {:poison, "~> 2.2"},
       {:briefly, "~> 0.3", only: :test}
     ]
