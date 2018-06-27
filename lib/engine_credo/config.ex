@@ -29,7 +29,6 @@ defmodule EngineCredo.Config do
     {source_files, invalid_files} = find_source_files(execution)
     execution =
       execution
-      |> load_inline_configuration(source_files)
       |> load_comment_configuration(source_files)
 
     %__MODULE__{
@@ -88,16 +87,6 @@ defmodule EngineCredo.Config do
     |> Credo.Sources.find
     |> Enum.filter(&String.ends_with?(&1.filename, [".ex", ".exs"]))
     |> Enum.split_with(&(&1.valid?))
-  end
-
-  # TODO: Remove this once stop supporting the inline attribute configuration.
-  defp load_inline_configuration(execution, source_files) do
-    lint_configuration =
-      source_files
-      |> Credo.Check.FindLintAttributes.run(execution, [])
-      |> Enum.into(%{})
-
-    %Credo.Execution{execution | lint_attribute_map: lint_configuration}
   end
 
   defp load_comment_configuration(execution, source_files) do
