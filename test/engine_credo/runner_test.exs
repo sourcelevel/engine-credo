@@ -11,6 +11,6 @@ defmodule EngineCredo.RunnerTest do
 
     issues = Enum.map(checked_files, &(&1.check_name))
 
-    assert [Credo.Check.Design.TagTODO, Credo.Check.Design.TagFIXME, Credo.Check.Design.TagTODO] == issues
+    assert [Credo.Check.Design.TagFIXME, Credo.Check.Design.TagTODO, Credo.Check.Design.TagTODO] == Enum.sort(issues)
   end
 end

@@ -13,8 +13,8 @@ defmodule EngineCredo.FormatterTest do
     end)
 
     issues = [
-      ~S({"type":"issue","remediation_points":100000,"location":{"path":"lib/design_issues.exs","lines":{"end":4,"begin":4}},"description":"Found a TODO tag in a comment: # TODO: issue","check_name":"Elixir.Credo.Check.Design.TagTODO","categories":["Bug Risk"]}),
       ~S({"type":"issue","remediation_points":100000,"location":{"path":"lib/design_issues.exs","lines":{"end":5,"begin":5}},"description":"Found a FIXME tag in a comment: # FIXME: issue","check_name":"Elixir.Credo.Check.Design.TagFIXME","categories":["Bug Risk"]}),
+      ~S({"type":"issue","remediation_points":100000,"location":{"path":"lib/design_issues.exs","lines":{"end":4,"begin":4}},"description":"Found a TODO tag in a comment: # TODO: issue","check_name":"Elixir.Credo.Check.Design.TagTODO","categories":["Bug Risk"]}),
       ~S({"type":"issue","remediation_points":100000,"location":{"path":"lib/ignore_via_attribute.exs","lines":{"end":6,"begin":6}},"description":"Found a TODO tag in a comment: # TODO: This TODO should not be reported","check_name":"Elixir.Credo.Check.Design.TagTODO","categories":["Bug Risk"]})
     ]
 

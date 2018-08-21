@@ -27,6 +27,7 @@ defmodule EngineCredo.Config do
     execution = build_execution(path, engine_config)
 
     {source_files, invalid_files} = find_source_files(execution)
+
     execution =
       execution
       |> load_comment_configuration(source_files)
@@ -41,20 +42,38 @@ defmodule EngineCredo.Config do
 
   defp read_engine_config(engine_config_file) do
     engine_config_file
-    |> File.read!
-    |> Poison.decode!
+    |> File.read!()
+    |> Poison.decode!()
   end
 
   defp build_execution(path, engine_config) do
     path
     |> read_config_file
+    |> reject_disabled_checks
     |> create_struct
     |> include_files_from(path, engine_config)
     |> boostrap
   end
 
   defp read_config_file(path) do
-    Credo.ConfigFile.read_or_default(path, nil, true) # true required for safe loading of `.credo.exs`.
+    # true required for safe loading of `.credo.exs`.
+    Credo.ConfigFile.read_or_default(path, nil, true)
+  end
+
+  defp reject_disabled_checks(engine_config) do
+    checks =
+      Enum.reject(engine_config.checks, fn
+        {_check, false} ->
+          true
+
+        {_check} ->
+          false
+
+        {_check, _opts} ->
+          false
+      end)
+
+    %Credo.ConfigFile{engine_config | checks: checks}
   end
 
   defp create_struct(%Credo.ConfigFile{} = config_file) do
@@ -70,23 +89,23 @@ defmodule EngineCredo.Config do
   defp include_files_from(execution, path, engine_config) do
     include_paths =
       engine_config["include_paths"]
-      |> List.wrap
+      |> List.wrap()
       |> Enum.map(&Path.join(path, &1))
 
-    update_in execution.files[:included], fn files ->
+    update_in(execution.files[:included], fn files ->
       files
       |> Enum.concat(include_paths)
-      |> Enum.uniq
-    end
+      |> Enum.uniq()
+    end)
   end
 
   # Filter out malformed Elixir files and also valid Elixir files with an unknown
   # file extension (`.ex` or `.exs`).
   defp find_source_files(execution) do
     execution
-    |> Credo.Sources.find
+    |> Credo.Sources.find()
     |> Enum.filter(&String.ends_with?(&1.filename, [".ex", ".exs"]))
-    |> Enum.split_with(&(&1.valid?))
+    |> Enum.split_with(& &1.valid?)
   end
 
   defp load_comment_configuration(execution, source_files) do
@@ -100,8 +119,8 @@ defmodule EngineCredo.Config do
 
   defp boostrap(execution) do
     execution
-    |> Credo.Execution.Issues.start_server
+    |> Credo.Execution.Issues.start_server()
     # TODO: Remove this once stop supporting the inline attribute configuration.
-    |> Credo.CLI.Output.UI.use_colors
+    |> Credo.CLI.Output.UI.use_colors()
   end
 end
