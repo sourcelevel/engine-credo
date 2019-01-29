@@ -6,11 +6,12 @@ defmodule EngineCredo.FormatterTest do
   alias EngineCredo.{Config, Formatter, Runner}
 
   test "prints issues as JSON separated by \\0 and \\n" do
-    output = capture_io(fn ->
-      Config.read
-      |> Runner.check
-      |> Formatter.print
-    end)
+    output =
+      capture_io(fn ->
+        Config.read()
+        |> Runner.check()
+        |> Formatter.print()
+      end)
 
     issues = [
       ~S({"type":"issue","remediation_points":100000,"location":{"path":"lib/design_issues.exs","lines":{"end":5,"begin":5}},"description":"Found a FIXME tag in a comment: # FIXME: issue","check_name":"Elixir.Credo.Check.Design.TagFIXME","categories":["Bug Risk"]}),
@@ -24,9 +25,10 @@ defmodule EngineCredo.FormatterTest do
   end
 
   test "prints a warning for each invalid source file detected" do
-    output = capture_io(:stderr, fn ->
-      Formatter.error(Config.read)
-    end)
+    output =
+      capture_io(:stderr, fn ->
+        Formatter.error(Config.read())
+      end)
 
     first_error = "Invalid file detected test/fixtures/project_root/lib/invalid_elixir.exs\n"
     second_error = "Invalid file detected test/fixtures/project_root/lib/non_utf8.exs\n"
