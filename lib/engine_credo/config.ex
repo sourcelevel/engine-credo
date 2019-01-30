@@ -57,7 +57,8 @@ defmodule EngineCredo.Config do
 
   defp read_config_file(path) do
     # true required for safe loading of `.credo.exs`.
-    Credo.ConfigFile.read_or_default(path, nil, true)
+    {:ok, result} = Credo.ConfigFile.read_or_default(path, nil, true)
+    result
   end
 
   defp reject_disabled_checks(engine_config) do
@@ -105,7 +106,7 @@ defmodule EngineCredo.Config do
     execution
     |> Credo.Sources.find()
     |> Enum.filter(&String.ends_with?(&1.filename, [".ex", ".exs"]))
-    |> Enum.split_with(& &1.valid?)
+    |> Enum.split_with(fn x -> x.status == :valid end)
   end
 
   defp load_comment_configuration(execution, source_files) do
@@ -119,7 +120,7 @@ defmodule EngineCredo.Config do
 
   defp boostrap(execution) do
     execution
-    |> Credo.Execution.Issues.start_server()
+    |> Credo.Execution.ExecutionIssues.start_server()
     # TODO: Remove this once stop supporting the inline attribute configuration.
     |> Credo.CLI.Output.UI.use_colors()
   end

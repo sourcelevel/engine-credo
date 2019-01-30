@@ -58,6 +58,7 @@ defmodule EngineCredo.IssueCategories do
     Credo.Check.Refactor.LongQuoteBlocks => "Clarity",
     Credo.Check.Refactor.MapInto => "Clarity",
 
+    Credo.Check.Warning.UnsafeToAtom => "Bug Risk",
     Credo.Check.Warning.BoolOperationOnSameValues => "Bug Risk",
     Credo.Check.Warning.IExPry => "Bug Risk",
     Credo.Check.Warning.IoInspect => "Bug Risk",
