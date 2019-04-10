@@ -1,4 +1,4 @@
-# engine-credo
+# Credo Engine
 
 `engine-credo` is a Docker container that wraps
 [credo](http://github.com/rrrene/credo) as a standalone executable,
@@ -13,6 +13,19 @@ for reviewing Elixir code.
 `engine-credo` will respect the `.credo.exs` configuration placed inside your
 repository. For more details, see the [`Configuration`](https://github.com/rrrene/credo#configuration)
 section of Credo's README.
+
+## Upgrading `credo`
+
+To upgrade `credo` version used by this container, simply:
+
+```
+script/update-credo
+```
+
+## Publishing
+
+It will be automatically built and pushed by `script/push` (included in
+[Travis CI](https://travis-ci.org) config file described in [`after_success`](https://docs.travis-ci.com/user/job-lifecycle/) stage) on merging into `master` branch.
 
 ## Need help?
 
