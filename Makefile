@@ -1,6 +1,6 @@
 .PHONY: image test
 
-IMAGE_NAME ?= plataformatec/engine-credo
+IMAGE_NAME ?= sourcelevel/engine-credo
 
 image:
 	docker build --rm -t $(IMAGE_NAME) .
