@@ -2,8 +2,8 @@
   "name": "credo",
   "description": "Static code analysis for the Elixir language",
   "maintainer": {
-    "name": "Plataformatec",
-    "email": "opensource@plataformatec.com.br"
+    "name": "SourceLevel",
+    "email": "support@sourcelevel.io"
   },
   "languages": ["Elixir"],
   "spec_version": "0.0.1",
