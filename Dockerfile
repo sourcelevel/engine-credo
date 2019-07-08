@@ -1,5 +1,5 @@
 FROM elixir:1.5.1-alpine
-MAINTAINER Plataformatec <opensource@plataformatec.com.br>
+MAINTAINER SourceLevel <support@sourcelevel.io>
 
 WORKDIR /usr/src/engine
 COPY . /usr/src/engine
