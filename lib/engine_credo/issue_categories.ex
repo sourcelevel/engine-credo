@@ -12,6 +12,7 @@ defmodule EngineCredo.IssueCategories do
     Credo.Check.Consistency.TabsOrSpaces => "Style",
     Credo.Check.Consistency.ParameterPatternMatching => "Style",
     Credo.Check.Consistency.MultiAliasImportRequireUse => "Style",
+    Credo.Check.Consistency.UnusedVariableNames => "Style",
 
     Credo.Check.Design.AliasUsage => "Clarity",
     Credo.Check.Design.DuplicatedCode => "Duplication",
@@ -19,10 +20,12 @@ defmodule EngineCredo.IssueCategories do
     Credo.Check.Design.TagTODO => "Bug Risk",
 
     Credo.Check.Readability.AliasOrder => "Style",
+    Credo.Check.Readability.AliasAs => "Style",
     Credo.Check.Readability.FunctionNames => "Style",
     Credo.Check.Readability.LargeNumbers => "Style",
     Credo.Check.Readability.UnnecessaryAliasExpansion => "Style",
     Credo.Check.Readability.MaxLineLength => "Style",
+    Credo.Check.Readability.MultiAlias => "Style",
     Credo.Check.Readability.ModuleAttributeNames => "Style",
     Credo.Check.Readability.ModuleDoc => "Clarity",
     Credo.Check.Readability.ModuleNames => "Style",
@@ -59,6 +62,7 @@ defmodule EngineCredo.IssueCategories do
     Credo.Check.Refactor.AppendSingleItem => "Clarity",
     Credo.Check.Refactor.LongQuoteBlocks => "Clarity",
     Credo.Check.Refactor.MapInto => "Clarity",
+    Credo.Check.Refactor.WithClauses => "Clarity",
 
     Credo.Check.Warning.UnsafeToAtom => "Bug Risk",
     Credo.Check.Warning.BoolOperationOnSameValues => "Bug Risk",
