@@ -5,6 +5,8 @@ services:
 - docker
 elixir:
 - 1.10.0
+otp_release:
+- 21
 cache:
   directories:
   - _build
