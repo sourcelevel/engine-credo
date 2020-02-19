@@ -4,7 +4,7 @@ after_success: "./script/push"
 services:
 - docker
 elixir:
-- 1.5.0
+- 1.10.0
 cache:
   directories:
   - _build
