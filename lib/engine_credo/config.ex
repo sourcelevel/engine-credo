@@ -56,8 +56,12 @@ defmodule EngineCredo.Config do
   end
 
   defp read_config_file(path) do
+    exec = Credo.Execution.build()
+    Credo.Execution.Task.run(Credo.Execution.Task.AppendDefaultConfig, exec)
+
     # true required for safe loading of `.credo.exs`.
-    {:ok, result} = Credo.ConfigFile.read_or_default(path, nil, true)
+    {:ok, result} = Credo.ConfigFile.read_or_default(exec, path, nil, true)
+
     result
   end
 
