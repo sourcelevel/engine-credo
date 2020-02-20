@@ -2,8 +2,10 @@ styleguide: sourcelevel/linters
 engines:
   credo:
     enabled: true
+    channel: latest
   remark-lint:
     enabled: true
+    channel: latest
 exclude_paths:
 - config
 - script
