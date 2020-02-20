@@ -5,7 +5,7 @@
 following the [Code Climate Engine spec](https://github.com/codeclimate/spec)
 for JSON output.
 
-`engine-credo` is available on [Ebert](https://ebertapp.io) as the default engine
+`engine-credo` is available on [SourceLevel](https://sourcelevel.io) as the default engine
 for reviewing Elixir code.
 
 ## Configuration
