@@ -1,5 +1,7 @@
 # Credo Engine
 
+[![SourceLevel](https://app.sourcelevel.io/github/sourcelevel/engine-credo.svg)](https://app.sourcelevel.io/github/sourcelevel/engine-credo)
+
 `engine-credo` is a Docker container that wraps
 [credo](http://github.com/rrrene/credo) as a standalone executable,
 following the [Code Climate Engine spec](https://github.com/codeclimate/spec)
