@@ -14,6 +14,9 @@ for reviewing Elixir code.
 repository. For more details, see the [`Configuration`](https://github.com/rrrene/credo#configuration)
 section of Credo's README.
 
+To check available versions and engine configuration visit
+[SourceLevel Credo page](https://docs.sourcelevel.io/engines/credo).
+
 ## Upgrading `credo`
 
 To upgrade `credo` version used by this container, simply:
