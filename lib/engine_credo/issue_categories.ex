@@ -53,6 +53,7 @@ defmodule EngineCredo.IssueCategories do
     Credo.Check.Refactor.ModuleDependencies => "Complexity",
     Credo.Check.Refactor.NegatedConditionsInUnless => "Style",
     Credo.Check.Refactor.NegatedConditionsWithElse => "Style",
+    Credo.Check.Refactor.NegatedIsNil => "Style",
     Credo.Check.Refactor.Nesting => "Complexity",
     Credo.Check.Refactor.PerceivedComplexity => "Complexity",
     Credo.Check.Refactor.PipeChainStart => "Clarity",
@@ -82,6 +83,7 @@ defmodule EngineCredo.IssueCategories do
     Credo.Check.Warning.MapGetUnsafePass => "Bug Risk",
     Credo.Check.Warning.RaiseInsideRescue => "Clarity",
     Credo.Check.Warning.ExpensiveEmptyEnumCheck => "Complexity",
+    Credo.Check.Warning.MixEnv => "Bug Risk",
 
     # Deprecated checks
     Credo.Check.Refactor.CaseTrivialMatches => "Clarity"
