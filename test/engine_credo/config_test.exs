@@ -11,7 +11,10 @@ defmodule EngineCredo.ConfigTest do
       "test/fixtures/project_root/src",
       "test/fixtures/project_root/test/**/*.{ex,exs}",
       "test/fixtures/project_root/web",
-      "test/fixtures/project_root/apps"
+      "test/fixtures/project_root/apps/*/lib",
+      "test/fixtures/project_root/apps/*/src",
+      "test/fixtures/project_root/apps/*/test",
+      "test/fixtures/project_root/apps/*/web"
     ]
 
     assert expected_included_paths == execution.files.included
@@ -35,7 +38,10 @@ defmodule EngineCredo.ConfigTest do
       "test/fixtures/project_root/src",
       "test/fixtures/project_root/test/**/*.{ex,exs}",
       "test/fixtures/project_root/web",
-      "test/fixtures/project_root/apps",
+      "test/fixtures/project_root/apps/*/lib",
+      "test/fixtures/project_root/apps/*/src",
+      "test/fixtures/project_root/apps/*/test",
+      "test/fixtures/project_root/apps/*/web",
       "test/fixtures/project_root/extra",
       "test/fixtures/project_root/other/no_issues.exs"
     ]
