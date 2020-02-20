@@ -1,6 +1,6 @@
 # Credo Engine
 
-[![SourceLevel](https://app.sourcelevel.io/github/sourcelevel/engine-credo.svg)](https://app.sourcelevel.io/github/sourcelevel/engine-credo)
+[![Build Status](https://travis-ci.org/sourcelevel/engine-credo.svg?branch=master)](https://travis-ci.org/sourcelevel/engine-credo) [![SourceLevel](https://app.sourcelevel.io/github/sourcelevel/engine-credo.svg)](https://app.sourcelevel.io/github/sourcelevel/engine-credo)
 
 `engine-credo` is a Docker container that wraps
 [credo](http://github.com/rrrene/credo) as a standalone executable,
