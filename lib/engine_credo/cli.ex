@@ -17,7 +17,7 @@ defmodule EngineCredo.CLI do
   rescue
     error ->
       # credo:disable-for-next-line Credo.Check.Warning.IoInspect
-      IO.puts(:stderr, Exception.format(:error, error, System.stacktrace()))
+      IO.puts(:stderr, Exception.format(:error, error, __STACKTRACE__))
       System.halt(1)
   end
 end
