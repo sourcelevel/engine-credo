@@ -1,4 +1,4 @@
-FROM elixir:1.10-alpine
+FROM elixir:1.11-alpine
 MAINTAINER SourceLevel <support@sourcelevel.io>
 
 WORKDIR /usr/src/engine
