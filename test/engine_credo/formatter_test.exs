@@ -19,9 +19,9 @@ defmodule EngineCredo.FormatterTest do
       ~S({"type":"issue","remediation_points":100000,"location":{"path":"lib/ignore_via_attribute.exs","lines":{"end":6,"begin":6}},"description":"Found a TODO tag in a comment: # TODO: This TODO should not be reported","check_name":"Elixir.Credo.Check.Design.TagTODO","categories":["Bug Risk"]})
     ]
 
-    expected_output = Enum.join(issues, "\0\n") <> "\0\n"
-
-    assert expected_output == output
+    Enum.each(issues, fn issue ->
+      assert String.contains?(output, issue)
+    end)
   end
 
   test "prints a warning for each invalid source file detected" do

@@ -47,16 +47,16 @@ defmodule EngineCredo.Config do
   end
 
   defp build_execution(path, engine_config) do
-    path
-    |> read_config_file
+    exec = Credo.Execution.build()
+
+    read_config_file(path, exec)
     |> reject_disabled_checks
-    |> create_struct
+    |> create_struct(exec)
     |> include_files_from(path, engine_config)
     |> boostrap
   end
 
-  defp read_config_file(path) do
-    exec = Credo.Execution.build()
+  defp read_config_file(path, exec) do
     Credo.Execution.Task.run(Credo.Execution.Task.AppendDefaultConfig, exec)
 
     # true required for safe loading of `.credo.exs`.
@@ -81,13 +81,14 @@ defmodule EngineCredo.Config do
     %Credo.ConfigFile{engine_config | checks: checks}
   end
 
-  defp create_struct(%Credo.ConfigFile{} = config_file) do
+  defp create_struct(%Credo.ConfigFile{} = config_file, %Credo.Execution{} = exec) do
     %Credo.Execution{
-      files: config_file.files,
-      checks: config_file.checks,
-      requires: config_file.requires,
-      strict: config_file.strict,
-      color: false
+      exec
+      | files: config_file.files,
+        checks: config_file.checks,
+        requires: config_file.requires,
+        strict: config_file.strict,
+        color: false
     }
   end
 
@@ -116,7 +117,7 @@ defmodule EngineCredo.Config do
   defp load_comment_configuration(execution, source_files) do
     comment_configuration =
       source_files
-      |> Credo.Check.ConfigCommentFinder.run(execution, [])
+      |> Credo.Check.ConfigCommentFinder.run()
       |> Enum.into(%{})
 
     %Credo.Execution{execution | config_comment_map: comment_configuration}
@@ -124,7 +125,6 @@ defmodule EngineCredo.Config do
 
   defp boostrap(execution) do
     execution
-    |> Credo.Execution.ExecutionIssues.start_server()
     # TODO: Remove this once stop supporting the inline attribute configuration.
     |> Credo.CLI.Output.UI.use_colors()
   end
