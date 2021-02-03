@@ -10,6 +10,8 @@ defmodule EngineCredo.Runner do
   alias Credo.Execution
 
   def check(%Config{execution: execution, source_files: files, source_code_path: path_prefix}) do
+    Execution.put_source_files(execution, files)
+
     :ok = Credo.Check.Runner.run(files, execution)
 
     issues = Execution.get_issues(execution)
