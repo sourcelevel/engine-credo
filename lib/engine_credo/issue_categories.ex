@@ -21,9 +21,10 @@ defmodule EngineCredo.IssueCategories do
 
     Credo.Check.Readability.AliasOrder => "Style",
     Credo.Check.Readability.AliasAs => "Style",
+    Credo.Check.Readability.BlockPipe => "Clarity",
     Credo.Check.Readability.FunctionNames => "Style",
     Credo.Check.Readability.LargeNumbers => "Style",
-    Credo.Check.Readability.UnnecessaryAliasExpansion => "Style",
+    Credo.Check.Readability.ImplTrue => "Style",
     Credo.Check.Readability.MaxLineLength => "Style",
     Credo.Check.Readability.MultiAlias => "Style",
     Credo.Check.Readability.ModuleAttributeNames => "Style",
@@ -37,6 +38,7 @@ defmodule EngineCredo.IssueCategories do
     Credo.Check.Readability.PreferUnquotedAtoms => "Style",
     Credo.Check.Readability.RedundantBlankLines => "Style",
     Credo.Check.Readability.Semicolons => "Style",
+    Credo.Check.Readability.SeparateAliasRequire => "Style",
     Credo.Check.Readability.SinglePipe => "Style",
     Credo.Check.Readability.SpaceAfterCommas => "Style",
     Credo.Check.Readability.Specs => "Style",
@@ -44,6 +46,7 @@ defmodule EngineCredo.IssueCategories do
     Credo.Check.Readability.StringSigils => "Style",
     Credo.Check.Readability.TrailingBlankLine => "Style",
     Credo.Check.Readability.TrailingWhiteSpace => "Style",
+    Credo.Check.Readability.UnnecessaryAliasExpansion => "Style",
     Credo.Check.Readability.VariableNames => "Style",
     Credo.Check.Readability.WithCustomTaggedTuple => "Clarity",
 
@@ -67,6 +70,7 @@ defmodule EngineCredo.IssueCategories do
     Credo.Check.Refactor.MapInto => "Clarity",
     Credo.Check.Refactor.WithClauses => "Clarity",
 
+    Credo.Check.Warning.ApplicationConfigInModuleAttribute => "Bug Risk",
     Credo.Check.Warning.UnsafeToAtom => "Bug Risk",
     Credo.Check.Warning.BoolOperationOnSameValues => "Bug Risk",
     Credo.Check.Warning.IExPry => "Bug Risk",
