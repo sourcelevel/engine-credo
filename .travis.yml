@@ -4,9 +4,9 @@ after_success: "./script/push"
 services:
 - docker
 elixir:
-- 1.10.0
+- 1.11.0
 otp_release:
-- 21.3
+- 23.1
 cache:
   directories:
   - _build
